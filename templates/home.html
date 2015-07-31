@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DynamoDB Replication</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+var loadResults = function() {
+    $.get("/results", function(resp) {
+        $("#results").html($("<pre>").text(JSON.stringify(resp, null, 2)));
+    });
+}
+
+var loadResultsCallback = function() {
+    loadResults();
+    setTimeout(loadResultsCallback, 500);
+}
+
+$(document).ready(function() {
+    loadResultsCallback();
+
+    $("#form #submit").click(function() {
+        var key = $("#form #key-field").val();
+        var value = $("#form #value-field").val();
+
+        $.post("/update", {key: key, value: value});
+    });
+});
+</script>
+</head>
+
+<body>
+<h2>{{ region }}</h2>
+<div id="form">
+    <select id="key-field">
+    {% for color in colors %}
+        <option>{{ color }}</option>
+    {% endfor %}
+    </select>
+    <input id="value-field" type="number" name="value" value="0"/>
+    <button id="submit">Submit</button>
+</div>
+<div id="results" style="font-family: fixed-width"></div>
+</body>
+
+</html>
