@@ -7,8 +7,10 @@ from flask import Flask, jsonify, render_template, request, abort
 from kafka.client import KafkaClient
 from kafka.producer import SimpleProducer
 
-REGION = "us-west-2"
-KAFKA_BROKER = "10-40-31-139-uswest1cdevc"
+with open("config.json") as f:
+    config = json.load(f)
+    REGION = config['region']
+    KAFKA_BROKER = config['broker']
 
 COLORS = ["orange", "fuchsia", "green", "blue", "cyan"]
 
