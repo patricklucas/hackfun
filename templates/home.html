@@ -5,15 +5,17 @@
 <title>DynamoDB Replication</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script>
-var loadResults = function() {
+var loadResults = function(callback) {
     $.get("/results", function(resp) {
+        callback();
         $("#results").html($("<pre>").text(JSON.stringify(resp, null, 2)));
     });
 }
 
 var loadResultsCallback = function() {
-    loadResults();
-    setTimeout(loadResultsCallback, 500);
+    loadResults(function() {
+        setTimeout(loadResultsCallback, 500);
+    });
 }
 
 $(document).ready(function() {
