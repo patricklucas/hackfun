@@ -14,7 +14,7 @@ var loadResults = function(callback) {
 
 var loadResultsCallback = function() {
     loadResults(function() {
-        setTimeout(loadResultsCallback, 500);
+        setTimeout(loadResultsCallback, 100);
     });
 }
 
